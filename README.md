@@ -1,5 +1,7 @@
 # RaspberryPi Grove TB6612FNG Motor Shield Library
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5bbc671589af4d7badab5a8e13910123)](https://app.codacy.com/manual/benovskym/raspberry-i2c-tb6612fng?utm_source=github.com&utm_medium=referral&utm_content=MarkusBansky/raspberry-i2c-tb6612fng&utm_campaign=Badge_Grade_Dashboard)
+
 This is a private open source port of the official Grove Motor Shield TB6612FNG library for Arduino to Python3 on RaspberryPI.
 
 ## Features
