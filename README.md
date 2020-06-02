@@ -1,6 +1,10 @@
 # RaspberryPi Grove TB6612FNG Motor Shield Library
 
-This is a private open source port of the official Grove Motor Shield TB6612FNG library for Arduino to Python3 on RaspberryPI.
+[![PyPI version](https://badge.fury.io/py/raspberry-i2c-tb6612fng@2x.png)](https://badge.fury.io/py/raspberry-i2c-tb6612fng)
+
+This is an open source port of the official Grove Motor Shield TB6612FNG library for Arduino to Python3 on RaspberryPI.
+
+This is a port of [Grove Arduino LIbrary](https://github.com/Seeed-Studio/Grove_Motor_Driver_TB6612FNG) for [Grove I2C Motor Driver on TB6612FNG](https://wiki.seeedstudio.com/Grove-I2C_Motor_Driver-TB6612FNG/).
 
 ## Features
   - Library is identical to the official Grove
