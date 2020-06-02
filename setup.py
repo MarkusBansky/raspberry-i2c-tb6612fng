@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='raspberry-i2c-tb6612fng',
-    version='0.1.0',
+    version='0.1.0a1',
     packages=find_packages(exclude=['tests*']),
     license='Creative Commons Attribution-ShareAlike 4.0 International Public License',
     description='A port of Grove Motor Driver TB6612FNG library for python and RaspberryPI. '
@@ -18,7 +18,7 @@ setup(
     url='https://github.com/MarkusBansky/raspberry-i2c-tb6612fng',
     author='Markiian Benovskyi',
     author_email='admin@markiian-benovskyi.com',
-    python_requires='>=3.6',
+    python_requires='>=2.7',
     classifiers=[
         "Programming Language :: Python :: 2",
         "License :: OSI Approved :: Creative Commons License",
