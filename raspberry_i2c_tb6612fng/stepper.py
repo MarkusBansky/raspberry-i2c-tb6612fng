@@ -15,15 +15,13 @@
 #      along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from enum import Enum
 
-
-class TB6612FNGStepper(Enum):
+class TB6612FNGStepper:
     """
     An enum for stepper motor commands enum.
     """
 
-    FULL_STEP: int = 0
-    WAVE_DRIVE: int = 1
-    HALF_STEP: int = 2
-    MICRO_STEPPING: int = 3
+    FULL_STEP = 0
+    WAVE_DRIVE = 1
+    HALF_STEP = 2
+    MICRO_STEPPING = 3
