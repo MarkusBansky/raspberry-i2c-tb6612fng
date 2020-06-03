@@ -22,7 +22,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='raspberry-i2c-tb6612fng',
-    version='0.1.2',
+    version='0.1.3',
     packages=find_packages(exclude=['tests*']),
     license='GNU General Public License',
     description='A port of Grove Motor Driver TB6612FNG library for python and RaspberryPI. '

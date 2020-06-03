@@ -76,7 +76,7 @@ def tb6612fng_easy_fn_out_cubic(t):
 
 
 class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
-    _easing_fn = tb6612fng_easy_fn_in_expo
+    _easing_fn = None
 
     def set_easing_fn(self, fn):
         """
@@ -99,6 +99,10 @@ class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
         :param transition_step: Time increase step. (max 0.25sec) Default: 100 ms.
         :return: nothing
         """
+        if self._easing_fn is None:
+            print("You have to assign easing function first")
+            return
+
         if transition_time > 5:
             transition_time = 5
         elif transition_time <= 0.1:
@@ -141,6 +145,10 @@ class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
         :param transition_step: Time increase step. (max 0.25sec) Default: 100 ms.
         :return: nothing
         """
+        if self._easing_fn is None:
+            print("You have to assign easing function first")
+            return
+
         if transition_time > 5:
             transition_time = 5
         elif transition_time <= 0.1:

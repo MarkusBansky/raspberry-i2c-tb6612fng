@@ -23,4 +23,4 @@ class TB6612FNGMotors:
     """
 
     MOTOR_CHA = 0
-    MOTOR_CH = 1
+    MOTOR_CHB = 1
