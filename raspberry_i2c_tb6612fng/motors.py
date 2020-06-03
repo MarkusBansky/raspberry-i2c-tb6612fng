@@ -15,14 +15,14 @@
 #      along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from enum import Enum
 
-class TB6612FNGMotors:
+
+class TB6612FNGMotors(Enum):
     """
     The motor selection contains two values: MOTOR_CHA and MOTOR_CHB,
     used to choose which motor to operate via the motor driver.
     """
-    def __init__(self):
-        pass
 
-    MOTOR_CHA = 0
-    MOTOR_CHB = 1
+    MOTOR_CHA: int = 0
+    MOTOR_CHB: int = 1

@@ -18,6 +18,8 @@
 import time
 import math
 
+from raspberry_i2c_tb6612fng import MotorDriverTB6612FNG, TB6612FNGMotors
+
 
 def tb6612fng_easy_fn_in_expo(t):
     """
@@ -73,40 +75,100 @@ def tb6612fng_easy_fn_out_cubic(t):
     return 1 - math.pow(1 - t, 3)
 
 
-def tb6612fng_easy(driver_inst, motor, speed_from, speed_to, fn, transition_time=3, transition_step=0.1):
-    """
-    This function creates a smooth transition from starting speed to target in specific amount of seconds.
-    :param driver_inst: A TB6612FNG I2C driver class instance.
-    :param motor: Selection which motor to run. MOTOR_CHA or MOTOR_CHB.
-    :param speed_from: The starting speed of the motor to make transition from.
-    :param speed_to: The target speed of motor.
-    :param fn: An easing function.
-    :param transition_time: Time to make this transition in seconds. (max 5 sec). Default: 3sec.
-    :param transition_step: Time increase step. (max 0.25sec) Default: 100 ms.
-    :return: nothing
-    """
-    if transition_time > 5:
-        transition_time = 5
-    elif transition_time <= 0.1:
-        transition_time = 0.1
+class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
+    _easing_fn = tb6612fng_easy_fn_in_expo
 
-    if speed_from < 25:
-        speed_from = 25
+    def set_easing_fn(self, fn):
+        """
+        This function changes the easing function for this easing motor class.
+        :param fn: The easing method.
+        :return: nothing.
+        """
+        self._easing_fn = fn
 
-    if transition_step > 0.25:
-        transition_step = 0.25
-    elif transition_step < 0.01:
-        transition_step = 0.01
+    def dc_motor_run_e(self, chl: int, speed_from: int, speed_to: int, transition_time: float = 3.0,
+                       transition_step: float = 0.1):
+        """
+        This function operates only a single motor at once.
+        If you want to easily move two motors simultaneously, use the function 'dc_motors_run_e'.
+        This function creates a smooth transition from starting speed to target in specific amount of seconds.
+        :param chl: Selection which motor to run. MOTOR_CHA or MOTOR_CHB.
+        :param speed_from: The starting speed of the motor to make transition from.
+        :param speed_to: The target speed of motor.
+        :param transition_time: Time to make this transition in seconds. (max 5 sec). Default: 3sec.
+        :param transition_step: Time increase step. (max 0.25sec) Default: 100 ms.
+        :return: nothing
+        """
+        if transition_time > 5:
+            transition_time = 5
+        elif transition_time <= 0.1:
+            transition_time = 0.1
 
-    elapsed = transition_time
+        if 75 > speed_from > 0:
+            speed_from = 75
+        elif 0 > speed_from >= -75:
+            speed_from = -75
+        elif speed_from == 0:
+            print('speed_from cannot be 0')
+            return
 
-    while elapsed > 0:
-        t = (transition_time - elapsed) / transition_time
-        y = fn(t)
+        if transition_step > 0.25:
+            transition_step = 0.25
+        elif transition_step < 0.01:
+            transition_step = 0.01
 
-        diff = (speed_to - speed_from) * y
+        elapsed = transition_time
 
-        driver_inst.dc_motor_run(motor, speed_from + diff)
+        while elapsed > 0:
+            t = (transition_time - elapsed) / transition_time
+            y = self._easing_fn(t)
 
-        elapsed -= transition_step
-        time.sleep(transition_step)
+            diff = (speed_to - speed_from) * y
+
+            self.dc_motor_run(chl, speed_from + diff)
+
+            elapsed -= transition_step
+            time.sleep(transition_step)
+
+    def dc_motors_run_e(self, speed_from: int, speed_to: int, transition_time: float = 3.0,
+                        transition_step: float = 0.1):
+        """
+        This function operates both motors at once.
+        This function creates a smooth transition from starting speed to target in specific amount of seconds.
+        :param speed_from: The starting speed of the motor to make transition from.
+        :param speed_to: The target speed of motor.
+        :param transition_time: Time to make this transition in seconds. (max 5 sec). Default: 3sec.
+        :param transition_step: Time increase step. (max 0.25sec) Default: 100 ms.
+        :return: nothing
+        """
+        if transition_time > 5:
+            transition_time = 5
+        elif transition_time <= 0.1:
+            transition_time = 0.1
+
+        if 75 > speed_from > 0:
+            speed_from = 75
+        elif 0 > speed_from >= -75:
+            speed_from = -75
+        elif speed_from == 0:
+            print('speed_from cannot be 0')
+            return
+
+        if transition_step > 0.25:
+            transition_step = 0.25
+        elif transition_step < 0.01:
+            transition_step = 0.01
+
+        elapsed = transition_time
+
+        while elapsed > 0:
+            t = (transition_time - elapsed) / transition_time
+            y = self._easing_fn(t)
+
+            diff = (speed_to - speed_from) * y
+
+            self.dc_motor_run(TB6612FNGMotors.MOTOR_CHA, speed_from + diff)
+            self.dc_motor_run(TB6612FNGMotors.MOTOR_CHB, speed_from + diff)
+
+            elapsed -= transition_step
+            time.sleep(transition_step)

@@ -55,7 +55,7 @@ class MotorDriverTB6612FNG:
         """
         self._i2c_bus.write_word_data(self._addr, TB6612FNGCodes.GMD_CMD_NOT_STANDBY, 0)
 
-    def set_i2c_addr(self, addr):
+    def set_i2c_addr(self, addr: int):
         """
         Set new address for this module.
         :param addr: The new address for motor driver. (0x01~0x7f)
@@ -68,7 +68,7 @@ class MotorDriverTB6612FNG:
         self._i2c_bus.write_word_data(self._addr, TB6612FNGCodes.GMD_CMD_SET_ADDR, addr)
         self._addr = addr
 
-    def dc_motor_run(self, chl, speed):
+    def dc_motor_run(self, chl: int, speed: int):
         """
         Output a specific amount of voltage to a specific motor. Voltage is between -255 and 255.
         The negative voltage means motor will go counter clockwise.
@@ -96,7 +96,7 @@ class MotorDriverTB6612FNG:
 
         self._i2c_bus.write_i2c_block_data(self._addr, self._buffer[0], self._buffer[1:])
 
-    def dc_motor_break(self, chl):
+    def dc_motor_break(self, chl: int):
         """
         Brake, stop the motor immediately.
         :param chl: MOTOR_CHA or MOTOR_CHB.
@@ -104,7 +104,7 @@ class MotorDriverTB6612FNG:
         """
         self._i2c_bus.write_word_data(self._addr, TB6612FNGCodes.GMD_CMD_BRAKE, chl)
 
-    def dc_motor_stop(self, chl):
+    def dc_motor_stop(self, chl: int):
         """
         Stop the motor slowly.
         :param chl: MOTOR_CHA or MOTOR_CHB.
@@ -112,7 +112,7 @@ class MotorDriverTB6612FNG:
         """
         self._i2c_bus.write_word_data(self._addr, TB6612FNGCodes.GMD_CMD_STOP, chl)
 
-    def stepper_run(self, mode, steps, rpm):
+    def stepper_run(self, mode: int, steps: int, rpm: int):
         """
         Drive a stepper motor.
         :param mode:    4 driver mode: FULL_STEP,WAVE_DRIVE, HALF_STEP, MICRO_STEPPING,
@@ -143,9 +143,9 @@ class MotorDriverTB6612FNG:
 
         ms_per_step = 3000.0 / rpm
 
-        self._buffer[0] = int(mode)
+        self._buffer[0] = mode
         self._buffer[1] = int(cw)
-        self._buffer[2] = int(steps)
+        self._buffer[2] = steps
         self._buffer[3] = int(steps >> 8)
         self._buffer[4] = int(ms_per_step)
         self._buffer[5] = (int(ms_per_step) >> 8)
@@ -159,7 +159,7 @@ class MotorDriverTB6612FNG:
         """
         self._i2c_bus.write_word_data(self._addr, TB6612FNGCodes.GMD_CMD_STEPPER_STOP, 0)
 
-    def stepper_keep_run(self, mode, rpm, is_cw):
+    def stepper_keep_run(self, mode: int, rpm: int, is_cw: int):
         """
         Keep a stepper motor running. Keeps moving(direction same as the last move, default to clockwise).
         :param mode: 4 driver mode: FULL_STEP,WAVE_DRIVE, HALF_STEP, MICRO_STEPPING,
