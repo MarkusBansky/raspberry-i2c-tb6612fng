@@ -26,18 +26,19 @@ class MotorDriverTB6612FNG:
     """
     A control class for the Grove - Motor Driver(TB6612FNG).
     """
+
     _addr = None
     _buffer = None
     _i2c_bus = None
 
-    def __init__(self, address=TB6612FNGCodes.GMD_I2C_ADDRESS):
+    def __init__(self, address=TB6612FNGCodes.GMD_I2C_ADDRESS, i2c_bus=1):
         """
-        Initializes the Motor Driver module with a specific or default address.
-        Creates a connection to the I2C bus on Raspberry.
-        By default the address for this module is 0x14.
+        Initializes the Motor Driver module. Creates a connection to the I2C bus.
+        :param address: The I2C address for this module. Default is 0x14.
+        :param i2c_bus: The I2C bus to use, default is 1.
         :rtype: MotorDriverTB6612FNG class instance.
         """
-        self._i2c_bus = SMBus(1)
+        self._i2c_bus = SMBus(i2c_bus)
         self._addr = address
         self.standby()
 
@@ -94,7 +95,9 @@ class MotorDriverTB6612FNG:
 
         self._buffer[1] = int(chl)
 
-        self._i2c_bus.write_i2c_block_data(self._addr, self._buffer[0], self._buffer[1:])
+        self._i2c_bus.write_i2c_block_data(
+            self._addr, self._buffer[0], self._buffer[1:]
+        )
 
     def dc_motor_break(self, chl: int):
         """
@@ -148,16 +151,20 @@ class MotorDriverTB6612FNG:
         self._buffer[2] = steps
         self._buffer[3] = int(steps >> 8)
         self._buffer[4] = int(ms_per_step)
-        self._buffer[5] = (int(ms_per_step) >> 8)
+        self._buffer[5] = int(ms_per_step) >> 8
 
-        self._i2c_bus.write_i2c_block_data(self._addr, TB6612FNGCodes.GMD_CMD_STEPPER_RUN, self._buffer)
+        self._i2c_bus.write_i2c_block_data(
+            self._addr, TB6612FNGCodes.GMD_CMD_STEPPER_RUN, self._buffer
+        )
 
     def stepper_stop(self):
         """
         Stop a stepper motor.
         :return: nothing.
         """
-        self._i2c_bus.write_word_data(self._addr, TB6612FNGCodes.GMD_CMD_STEPPER_STOP, 0)
+        self._i2c_bus.write_word_data(
+            self._addr, TB6612FNGCodes.GMD_CMD_STEPPER_STOP, 0
+        )
 
     def stepper_keep_run(self, mode: int, rpm: int, is_cw: int):
         """
@@ -182,6 +189,8 @@ class MotorDriverTB6612FNG:
         self._buffer[0] = int(mode)
         self._buffer[1] = int(cw)
         self._buffer[2] = int(ms_per_step)
-        self._buffer[3] = (int(ms_per_step) >> 8)
+        self._buffer[3] = int(ms_per_step) >> 8
 
-        self._i2c_bus.write_i2c_block_data(self._addr, TB6612FNGCodes.GMD_CMD_STEPPER_KEEP_RUN, self._buffer)
+        self._i2c_bus.write_i2c_block_data(
+            self._addr, TB6612FNGCodes.GMD_CMD_STEPPER_KEEP_RUN, self._buffer
+        )

@@ -21,23 +21,22 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='raspberry-i2c-tb6612fng',
-    version='0.1.3',
-    packages=find_packages(exclude=['tests*']),
-    license='GNU General Public License',
-    description='A port of Grove Motor Driver TB6612FNG library for python and RaspberryPI. '
-                'This library also includes easing functions to control your motors with smooth transitions.'
-                'Easing functions are available for dc motors only.',
+    name="raspberry-i2c-tb6612fng",
+    version="0.3.0",
+    packages=find_packages(exclude=["tests*"]),
+    license="GNU General Public License",
+    description="A port of Grove Motor Driver TB6612FNG library for python and RaspberryPI. "
+    "This library also includes easing functions to control your motors with smooth transitions.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=['smbus'],
-    keywords='raspberry i2c tb6612fng grove motor',
-    url='https://github.com/MarkusBansky/raspberry-i2c-tb6612fng',
-    author='Markiian Benovskyi',
-    author_email='admin@markiian-benovskyi.com',
-    python_requires='>=3.6',
+    install_requires=["smbus"],
+    keywords="raspberry i2c tb6612fng grove motor",
+    url="https://github.com/MarkusBansky/raspberry-i2c-tb6612fng",
+    author="Markiian Benovskyi",
+    author_email="admin@markiian-benovskyi.com",
+    python_requires=">=3.13",
     classifiers=[
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: POSIX :: Linux",
     ],

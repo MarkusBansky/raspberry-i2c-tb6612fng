@@ -86,8 +86,14 @@ class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
         """
         self._easing_fn = fn
 
-    def dc_motor_run_e(self, chl: int, speed_from: int, speed_to: int, transition_time: float = 3.0,
-                       transition_step: float = 0.1):
+    def dc_motor_run_e(
+        self,
+        chl: int,
+        speed_from: int,
+        speed_to: int,
+        transition_time: float = 3.0,
+        transition_step: float = 0.1,
+    ):
         """
         This function operates only a single motor at once.
         If you want to easily move two motors simultaneously, use the function 'dc_motors_run_e'.
@@ -113,7 +119,7 @@ class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
         elif 0 > speed_from >= -75:
             speed_from = -75
         elif speed_from == 0:
-            print('speed_from cannot be 0')
+            print("speed_from cannot be 0")
             return
 
         if transition_step > 0.25:
@@ -134,8 +140,13 @@ class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
             elapsed -= transition_step
             time.sleep(transition_step)
 
-    def dc_motors_run_e(self, speed_from: int, speed_to: int, transition_time: float = 3.0,
-                        transition_step: float = 0.1):
+    def dc_motors_run_e(
+        self,
+        speed_from: int,
+        speed_to: int,
+        transition_time: float = 3.0,
+        transition_step: float = 0.1,
+    ):
         """
         This function operates both motors at once.
         This function creates a smooth transition from starting speed to target in specific amount of seconds.
@@ -159,7 +170,7 @@ class MotorDriverTB6612FNG_Easy(MotorDriverTB6612FNG):
         elif 0 > speed_from >= -75:
             speed_from = -75
         elif speed_from == 0:
-            print('speed_from cannot be 0')
+            print("speed_from cannot be 0")
             return
 
         if transition_step > 0.25:

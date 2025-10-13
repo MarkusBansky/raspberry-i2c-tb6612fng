@@ -2,53 +2,55 @@
 
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/raspberry-i2c-tb6612fng.svg)](https://pypi.python.org/pypi/raspberry-i2c-tb6612fng/)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/raspberry-i2c-tb6612fng.svg)](https://pypi.python.org/pypi/raspberry-i2c-tb6612fng/)
-[![PyPI license](https://img.shields.io/pypi/l/raspberry-i2c-tb6612fng.svg)](https://pypi.python.org/pypi/raspberry-i2c-tb6612fng/)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5bbc671589af4d7badab5a8e13910123)](https://app.codacy.com/manual/benovskym/raspberry-i2c-tb6612fng?utm_source=github.com&utm_medium=referral&utm_content=MarkusBansky/raspberry-i2c-tb6612fng&utm_campaign=Badge_Grade_Dashboard)
 
-This is an open source port of the official Grove Motor Shield TB6612FNG library for Arduino to Python3 on RaspberryPI.
-
-This is a port of [Grove Arduino LIbrary](https://github.com/Seeed-Studio/Grove_Motor_Driver_TB6612FNG) for [Grove I2C Motor Driver on TB6612FNG](https://wiki.seeedstudio.com/Grove-I2C_Motor_Driver-TB6612FNG/).
+This is an open source port of the official Grove Motor Shield TB6612FNG library for Arduino to Python for Raspberry Pi.
 
 ## Features
-  - Library is identical to the official Grove
-  - It depends only on built in libraries**
-
-***library requires I2C to be activated on the RaspberryPI board running Linux build*
+  - Library aims to be identical to the [Grove Arduino LIbrary](https://github.com/Seeed-Studio/Grove_Motor_Driver_TB6612FNG) for ease of use
+  - Control [Grove I2C Motor Driver on TB6612FNG](https://wiki.seeedstudio.com/Grove-I2C_Motor_Driver-TB6612FNG/)
+  - **(Experimental)** Includes 6 easing functions for smooth start of the motors, limited to a single motor at once
 
 ## Requirements
-  - RaspberryPi linux image
-  - Python 3.6+
-  - **smbus** library
-  - **time** library
-  - **math** library
+  - RaspberryPi I2C enabled
+  - Python 3.13 or higher
 
-This library also includes a experimental python easing functions:
-  - Contains 6 easing functions for smooth start of motors
-  - Easing functions currently can only be used on a single motor at once
-  - Containing IN and OUT functions
+> [!NOTE] This library was tested in 2025 on Raspberry Pi 5 8GB with Raspberry Pi OS (64-bit Debian 1:6.12.47-1+rpt1 2025-09-16) with kernel version 6.12 running Python 3.13.5 and library version 0.3.0.
 
+# Getting started
 
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
+## 1. Enable I2C on your Raspberry Pi
 
-# How to use
-Basic usage of this library is very simple. First of all make sure you are running the latest released version of **pip**.
+If you have not done so already, you will need to enable I2C on your Raspberry Pi. You can do this by running `sudo raspi-config` in your terminal, then navigating to `Interfacing Options` -> `I2C` and enabling it. After that, you may need to reboot your Raspberry Pi.
 
-This library requires you to add an additional `index-url` to **pip.conf** in order to install it. You can do this by editing your config file with `sudo nano /etc/pip.conf` and inserting this line just after the `[global]` section:
+## 2. Install Python
 
-```config
-index-url=https://pypi.python.org/
+You can install the latest version of python on your Raspberry Pi by running the following commands in your terminal:
+
+```bash
+sudo apt update
+sudo apt install python3 python3-pip python3-venv
 ```
 
-Now you can install the package as usual, for python3 use something for example:
-`python3 -m pip install raspberry-i2c-tb6612fng`
+It is recommended to use a virtual environment for your python projects. You can create one by running the following commands:
 
-Next, after successfull instalation you can import this library and start using it in your project like this:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+## 3. Install the library
+
+Install this library:
+
+```bash
+python3 -m pip install raspberry-i2c-tb6612fng
+```
+
+## 4. Example usage
 
 ```python
-# import default libraries that are used in this example
 import time
 
-# import the library
 from raspberry_i2c_tb6612fng import MotorDriverTB6612FNG, TB6612FNGMotors
 
 # create an instance of the driver, connected to i2c
@@ -64,9 +66,8 @@ time.sleep(1)
 # stop the motors
 driver.dc_motor_break(TB6612FNGMotors.MOTOR_CHA)
 driver.dc_motor_break(TB6612FNGMotors.MOTOR_CHB)
-
 ```
 
-##### Documentation
+# License
 
-If you would like to read about all functions available, please refer to this projects Wiki page on GitHub.
+This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
